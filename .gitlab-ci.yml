@@ -1,6 +1,6 @@
 ---
 stages:
-  - preflight
+  - check
   - test
   - push
 
@@ -14,10 +14,10 @@ variables:
 
 
 ##################################################
-# PREFLIGHT
+# CHECKS
 ##################################################
 yamllint:
-  stage: preflight
+  stage: check
   image: sdesbure/yamllint
   before_script:
     - yamllint --version
@@ -25,7 +25,7 @@ yamllint:
     - yamllint .
 
 hadolint:
-  stage: preflight
+  stage: check
   image: hadolint/hadolint:latest-debian
   before_script:
     - hadolint --version
@@ -94,11 +94,12 @@ push_src_on_github:
     - git config --global user.email "${GITHUB_USER_EMAIL}"
     - git config --global user.name "${GITHUB_USER}"
     - git config --global init.defaultBranch main
+    - COMMENT=$(git log -1 --pretty=%B | head -1)
   script:
     - git clone git@github.com:${GITHUB_USER}/docker-molecule_rocky8.git /tmp/docker-molecule_rocky8
     - rm -rf .git
     - cp -r . /tmp/docker-molecule_rocky8/
     - cd /tmp/docker-molecule_rocky8
     - git add -A
-    - git commit -m "adding features" || echo "No changes, nothing to commit!"
+    - git commit -m "${COMMENT}" || echo "No changes, nothing to commit!"
     - git push

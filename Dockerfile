@@ -2,7 +2,8 @@ FROM rockylinux/rockylinux:8
 LABEL maintainer="lotusnoir"
 
 ENV container docker
-ENV LC_ALL C
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /lib/systemd/system/sysinit.target.wants/
@@ -17,7 +18,9 @@ RUN (for i in *; do [ "${i}" == systemd-tmpfiles-setup.service ] || rm -f "${i}"
     yum -y install rpm dnf-plugins-core \
     && yum -y update \
     && yum -y config-manager --set-enabled powertools \
-    && yum -y install epel-release initscripts sudo which hostname python3 \
+    && yum -y install epel-release initscripts sudo which hostname python3-pip \
+    && python3 -m pip install --no-cache-dir --upgrade pip \
+    && python3 -m pip install --no-cache-dir ansible cryptography jmespath \
     && yum clean all && rm -rf /tmp/* /var/tmp/* /usr/share/doc /usr/share/man
 
 VOLUME [ "/sys/fs/cgroup" ]
