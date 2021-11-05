@@ -7,7 +7,7 @@ stages:
 variables:
   CI_REGISTRY_URL: registry-test
   CI_REGISTRY_USER: CI
-  REGISTRY_IMG_TAG: ${CI_REGISTRY_URL}.${COMPANY_DOMAIN}/${GITLAB_USER}/docker-molecule_rocky8:latest
+  REGISTRY_IMG_TAG: ${CI_REGISTRY_URL}.${COMPANY_DOMAIN}/docker_images/docker-molecule_rocky8:latest
   DOCKERHUB_TAG: ${DOCKERHUB_USER}/ansible_molecule_test_images:rocky8
   DOCKERHUB_USER: lotusnoir
   GITHUB_USER: lotusnoir
