@@ -13,6 +13,7 @@ variables:
   DOCKERHUB_USER: lotusnoir
   GITHUB_USER: lotusnoir
 
+
 ##################################################
 # CHECKS
 ##################################################
@@ -32,6 +33,7 @@ hadolint:
   script:
     - hadolint Dockerfile
 
+
 ##################################################
 # TEST BUILD
 ##################################################
@@ -47,6 +49,7 @@ test_build:
     - docker run -d --name=test-${OS_TYPE} --cgroupns=host --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw test-build-${OS_TYPE}
     - docker exec test-${OS_TYPE} systemctl --version
     - docker stop test-${OS_TYPE} && docker rm test-${OS_TYPE}
+
 
 ##################################################
 # PUSH CODE AND IMAGE
