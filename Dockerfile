@@ -17,13 +17,11 @@ RUN (for i in *; do [ "${i}" = "systemd-tmpfiles-setup.service" ] || rm -f "${i}
 
 RUN yum -y install rpm dnf-plugins-core && yum -y update \
     && yum -y config-manager --set-enabled powertools \
-    && yum -y install epel-release initscripts sudo which hostname python3-pip wget vim curl \
+    && yum -y install epel-release initscripts sudo which hostname python39-pip wget vim curl procps-ng \
     && yum clean all && rm -rf /tmp/* /var/tmp/* /usr/share/doc /usr/share/man
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip \
     && python3 -m pip install --no-cache-dir ansible cryptography jmespath
-
-RUN wget -q -O /usr/local/bin/goss https://github.com/aelsabbahy/goss/releases/download/v0.4.8/goss-linux-amd64 && chmod +x /usr/local/bin/goss
 
 RUN sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd-localed.service && sed -i 's/PrivateDevices=yes/PrivateDevices=no/' /lib/systemd/system/systemd-localed.service \
     && sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd-hostnamed.service && sed -i 's/PrivateDevices=yes/PrivateDevices=no/' /lib/systemd/system/systemd-hostnamed.service \
