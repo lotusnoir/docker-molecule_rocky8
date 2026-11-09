@@ -27,6 +27,7 @@ RUN sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd
     && sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd-hostnamed.service && sed -i 's/PrivateDevices=yes/PrivateDevices=no/' /lib/systemd/system/systemd-hostnamed.service \
     && sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd-resolved.service && sed -i 's/PrivateDevices=yes/PrivateDevices=no/' /lib/systemd/system/systemd-resolved.service \
     && sed -i 's/PrivateNetwork=yes/PrivateNetwork=no/' /lib/systemd/system/systemd-timedated.service && sed -i 's/PrivateDevices=yes/PrivateDevices=no/' /lib/systemd/system/systemd-timedated.service
+RUN printf "auth sufficient pam_permit.so\naccount sufficient pam_permit.so\nsession sufficient pam_permit.so\n" > /etc/pam.d/sudo
 
 VOLUME [ "/tmp", "/run", "/run/lock" ]
 ENTRYPOINT ["/lib/systemd/systemd"]
