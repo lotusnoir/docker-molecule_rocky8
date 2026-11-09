@@ -17,7 +17,7 @@ RUN (for i in *; do [ "${i}" = "systemd-tmpfiles-setup.service" ] || rm -f "${i}
 
 RUN yum -y install rpm dnf-plugins-core && yum -y update \
     && yum -y config-manager --set-enabled powertools \
-    && yum -y install epel-release initscripts sudo which hostname python39-pip wget vim curl procps-ng \
+    && yum -y install epel-release initscripts sudo which hostname python39-pip wget vim curl procps-ng python3-dnf\
     && yum clean all && rm -rf /tmp/* /var/tmp/* /usr/share/doc /usr/share/man
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip \
